@@ -1,5 +1,6 @@
 package com.dalent.api.domain.work.domain;
 
+import com.dalent.api.domain.comment.domain.Comment;
 import com.dalent.api.domain.user.domain.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -42,8 +43,8 @@ public class Work {
     @JoinColumn(name = "author")
     private User author;
 
-    @OneToMany(mappedBy = "comment")
-    private List<Work> works = new ArrayList<>();
+    @OneToMany(mappedBy = "work")
+    private List<Comment> works = new ArrayList<>();
 
     @Builder
     public Work(Category category, String title, String content, MediaType mediaType, String mediaLink,
