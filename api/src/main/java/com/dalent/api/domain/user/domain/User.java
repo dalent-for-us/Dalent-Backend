@@ -33,19 +33,19 @@ public class User {
 
     private String introduce;
 
-    @OneToOne(mappedBy = "gallery")
+    @OneToOne(mappedBy = "user")
     private Gallery gallery;
 
-    @OneToMany(mappedBy = "following")
+    @OneToMany(mappedBy = "user")
     private List<Follow> followings = new ArrayList<>();
 
-    @OneToMany(mappedBy = "followers")
+    @OneToMany(mappedBy = "target")
     private List<Follow> followers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "works")
+    @OneToMany(mappedBy = "author")
     private List<Work> works = new ArrayList<>();
 
-    @OneToMany(mappedBy = "comments")
+    @OneToMany(mappedBy = "writer")
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
