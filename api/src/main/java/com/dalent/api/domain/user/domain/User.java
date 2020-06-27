@@ -29,7 +29,13 @@ public class User {
 
     private String profile_image;
 
-    private int heartsCount;
+    private int artStars;
+
+    private int fashionStars;
+
+    private int musicStars;
+
+    private int programmingStars;
 
     private String introduce;
 
@@ -53,7 +59,10 @@ public class User {
         this.id = id;
         this.password = password;
         this.nickname = nickname;
-        this.heartsCount = 0;
+        this.artStars = 0;
+        this.fashionStars = 0;
+        this.musicStars = 0;
+        this.programmingStars = 0;
         this.introduce = "";
     }
 
