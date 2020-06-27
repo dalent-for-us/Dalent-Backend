@@ -30,7 +30,7 @@ public class Work {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private int hearts;
+    private int stars;
 
     @Enumerated(EnumType.STRING)
     private MediaType mediaType;
