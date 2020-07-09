@@ -2,6 +2,7 @@ package com.dalent.api.domain.auth.service;
 
 import com.dalent.api.domain.auth.dto.LoginRequestDto;
 import com.dalent.api.domain.auth.dto.TokenResponseDto;
+import com.dalent.api.domain.auth.exception.InvalidTokenException;
 import com.dalent.api.domain.auth.exception.UserNotFoundException;
 import com.dalent.api.domain.user.dao.UserRepository;
 import com.dalent.api.domain.user.domain.User;
@@ -26,6 +27,17 @@ public class AuthService {
                 .orElseThrow(UserNotFoundException::new);
 
         String nickname = user.getNickname();
+
+        return TokenResponseDto.builder()
+                .accessToken(jwtTokenProvider.generateAccessToken(nickname))
+                .refreshToken(jwtTokenProvider.generateRefreshToken(nickname))
+                .build();
+    }
+
+    public TokenResponseDto refreshToken(String refreshToken) {
+        if(!jwtTokenProvider.validateToken(refreshToken, "refresh_token")) throw new InvalidTokenException();
+
+        String nickname = jwtTokenProvider.getUserNickname(refreshToken);
 
         return TokenResponseDto.builder()
                 .accessToken(jwtTokenProvider.generateAccessToken(nickname))
