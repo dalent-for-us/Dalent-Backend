@@ -7,7 +7,8 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
     // User
-    USER_DUPLICATE(409, "U001", "User Duplicated");
+    USER_NOT_FOUND(400, "U001", "User Not Found"),
+    USER_DUPLICATE(409, "U002", "User Duplicated");
 
     private final int status;
     private final String code;
