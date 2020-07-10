@@ -67,6 +67,7 @@ public class User implements UserDetails {
         this.musicStars = 0;
         this.programmingStars = 0;
         this.introduce = "";
+        this.profile_image = "";
     }
 
     @Override
