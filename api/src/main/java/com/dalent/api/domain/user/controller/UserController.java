@@ -1,5 +1,6 @@
 package com.dalent.api.domain.user.controller;
 
+import com.dalent.api.domain.user.dto.UserInfoResponseDto;
 import com.dalent.api.domain.user.dto.UserJoinRequestDto;
 import com.dalent.api.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,4 +17,7 @@ public class UserController {
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public void join(@RequestBody UserJoinRequestDto requestDto) { userService.join(requestDto); }
+
+    @GetMapping("/me")
+    public UserInfoResponseDto getMyInfo() { return userService.getMyInfo(); }
 }
