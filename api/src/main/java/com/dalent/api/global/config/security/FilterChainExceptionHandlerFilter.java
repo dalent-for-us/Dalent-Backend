@@ -1,25 +1,42 @@
 package com.dalent.api.global.config.security;
 
-import com.dalent.api.global.error.exception.BusinessException;
+import com.dalent.api.global.error.ErrorResponse;
 import com.dalent.api.global.error.exception.ErrorCode;
-import org.springframework.security.core.AuthenticationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Component
 public class FilterChainExceptionHandlerFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-    throws ServletException, IOException, AuthenticationException{
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+    throws ServletException, IOException{
+
         try {
-            filterChain.doFilter(request, response);
-        } catch (ServletException | IOException | AuthenticationException e) {
-            throw new BusinessException(ErrorCode.AUTHENTICATION);
+            chain.doFilter(request, response);
+        } catch (Exception e) {
+            ErrorCode code = ErrorCode.AUTHENTICATION;
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setStatus(code.getStatus());
+
+            ErrorResponse errorResponse = new ErrorResponse(code.getStatus(), e.getMessage(), code.getCode());
+            response.getWriter().write(convertObjectToJson(errorResponse));
         }
+    }
+
+    private String convertObjectToJson(Object object) throws JsonProcessingException {
+        if (object == null) {
+            return null;
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(object);
     }
 }
