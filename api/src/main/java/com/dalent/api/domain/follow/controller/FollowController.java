@@ -18,4 +18,9 @@ public class FollowController {
     public void followUser(@RequestBody FollowRequestDto requestDto) {
         followService.follow(requestDto);
     }
+
+    @GetMapping("/followings")
+    public Long getFollowings(@RequestParam String userId) {
+        return followService.getFollowings(userId);
+    }
 }
