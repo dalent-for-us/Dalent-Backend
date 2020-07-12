@@ -67,6 +67,12 @@ public class User implements UserDetails {
         this.musicStars = 0;
         this.programmingStars = 0;
         this.introduce = "";
+        this.profile_image = "";
+    }
+
+    public void reviseInfo(String profile_image, String introduce) {
+        if(profile_image != null) this.profile_image = profile_image;
+        if(introduce != null) this.introduce = introduce;
     }
 
     @Override

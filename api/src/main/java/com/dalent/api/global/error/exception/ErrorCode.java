@@ -11,7 +11,8 @@ public enum ErrorCode {
     USER_DUPLICATE(409, "U002", "User Duplicated"),
 
     //Auth
-    INVALID_TOKEN(401, "A001", "Invalid Token");
+    AUTHENTICATION(401, "A001", "Authentication Error"),
+    INVALID_TOKEN(401, "A002", "Invalid Token");
 
     private final int status;
     private final String code;
