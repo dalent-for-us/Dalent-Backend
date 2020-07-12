@@ -4,6 +4,7 @@ import com.dalent.api.domain.auth.exception.UserNotFoundException;
 import com.dalent.api.domain.user.dao.UserRepository;
 import com.dalent.api.domain.user.domain.User;
 import com.dalent.api.domain.user.dto.UserInfoResponseDto;
+import com.dalent.api.domain.user.dto.UserInfoUpdateRequestDto;
 import com.dalent.api.domain.user.dto.UserJoinRequestDto;
 import com.dalent.api.domain.user.exception.UserDuplicateException;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +49,17 @@ public class UserService {
                             .build();
                 })
                 .orElseThrow(UserNotFoundException::new);
+    }
+
+    public void updateMyInfo(UserInfoUpdateRequestDto requestDto) {
+        String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
+        String profileImage = requestDto.getProfile_image();
+        String introduce = requestDto.getIntroduce();
+
+        userRepository.findByNickname(nickname)
+                .map(user -> {
+                    user.reviseInfo(profileImage, introduce);
+                    return true;
+                }).orElseThrow(UserNotFoundException::new);
     }
 }
