@@ -27,4 +27,10 @@ public class FollowService {
                 .target(target)
                 .build());
     }
+
+    public long getFollowings(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        return user.getFollowings().stream()
+                .count();
+    }
 }
