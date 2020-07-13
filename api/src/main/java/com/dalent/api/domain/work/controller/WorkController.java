@@ -24,4 +24,10 @@ public class WorkController {
     public WorkDetailResponseDto findWork(@PathVariable("work_id") String workId) {
         return workService.findWork(Long.parseLong(workId));
     }
+
+    @DeleteMapping("/{work_id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteWork(@PathVariable("work_id") String workId) {
+        workService.deleteWork(Long.parseLong(workId));
+    }
 }
