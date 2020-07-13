@@ -15,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class WorkService {
@@ -54,7 +57,25 @@ public class WorkService {
                 .nickname(work.getAuthor().getNickname())
                 .thumbnail_image(work.getThumbnailImage())
                 .title(work.getTitle())
+                .stars(work.getStars())
                 .build();
+    }
+
+    public List<WorkDetailResponseDto> getWorks(String category) {
+        List<Work> works = workRepository.findByCategoryOrderByStarsDesc(Category.valueOf(category.toUpperCase()));
+        return works.stream()
+                .map(work -> WorkDetailResponseDto.builder()
+                        .thumbnail_image(work.getThumbnailImage())
+                        .title(work.getTitle())
+                        .nickname(work.getAuthor().getNickname())
+                        .media_type(work.getMediaType().getValue())
+                        .media_link(work.getMediaLink())
+                        .content(work.getContent())
+                        .category(work.getCategory().getValue())
+                        .work_id(work.getWorkId())
+                        .stars(work.getStars())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     public void updateWork(Long workId, CreateWorkRequestDto request) {
