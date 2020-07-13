@@ -3,6 +3,7 @@ package com.dalent.api.domain.star.service;
 import com.dalent.api.domain.auth.exception.UserNotFoundException;
 import com.dalent.api.domain.star.dao.StarRepository;
 import com.dalent.api.domain.star.domain.Star;
+import com.dalent.api.domain.star.exception.AlreadyGaveStarException;
 import com.dalent.api.domain.user.dao.UserRepository;
 import com.dalent.api.domain.user.domain.User;
 import com.dalent.api.domain.work.dao.WorkRepository;
@@ -35,6 +36,8 @@ public class StarService {
 
         User target = userRepository.findByNickname(work.getAuthor().getNickname())
                 .orElseThrow(UserNotFoundException::new);
+
+        if(starRepository.findByUser(user).isPresent()) throw new AlreadyGaveStarException();
 
         Star star = starRepository.save(Star.builder()
                 .category(work.getCategory())
