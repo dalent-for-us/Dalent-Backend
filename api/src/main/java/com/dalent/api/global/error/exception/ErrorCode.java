@@ -18,7 +18,8 @@ public enum ErrorCode {
     FOLLOW_NOT_FOUND(400, "F001", "Follow Not Found"),
 
     //Gallery
-    GALLERY_NOT_FOUND(400, "G001", "Gallery Not Found");
+    GALLERY_NOT_FOUND(400, "G001", "Gallery Not Found"),
+    NOT_MY_GALLERY(403, "G002", "Not My Gallery");
 
     private final int status;
     private final String code;
