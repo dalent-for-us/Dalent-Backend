@@ -9,6 +9,7 @@ import com.dalent.api.domain.work.domain.MediaType;
 import com.dalent.api.domain.work.domain.Work;
 import com.dalent.api.domain.work.dto.CreateWorkRequestDto;
 import com.dalent.api.domain.work.dto.WorkDetailResponseDto;
+import com.dalent.api.domain.work.exception.NotMyWorkException;
 import com.dalent.api.domain.work.exception.WorkNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,5 +54,13 @@ public class WorkService {
                 .thumbnail_image(work.getThumbnailImage())
                 .title(work.getTitle())
                 .build();
+    }
+
+    public void deleteWork(Long workId) {
+        Work work = workRepository.findById(workId).orElseThrow(WorkNotFoundException::new);
+        String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(!work.getAuthor().getNickname().equals(nickname)) throw new NotMyWorkException();
+
+        workRepository.delete(work);
     }
 }
