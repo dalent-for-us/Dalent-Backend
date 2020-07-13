@@ -4,6 +4,7 @@ import com.dalent.api.domain.auth.exception.UserNotFoundException;
 import com.dalent.api.domain.star.dao.StarRepository;
 import com.dalent.api.domain.star.domain.Star;
 import com.dalent.api.domain.star.exception.AlreadyGaveStarException;
+import com.dalent.api.domain.star.exception.StarNotFoundException;
 import com.dalent.api.domain.user.dao.UserRepository;
 import com.dalent.api.domain.user.domain.User;
 import com.dalent.api.domain.work.dao.WorkRepository;
@@ -58,5 +59,16 @@ public class StarService {
                   return star.getUser().getNickname();
                 })
                 .collect(Collectors.toList());
+    }
+
+    public void cancelStar(String workId) {
+        Work work = workRepository.findById(Long.parseLong(workId))
+                .orElseThrow(WorkNotFoundException::new);
+
+        String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByNickname(nickname).orElseThrow(UserNotFoundException::new);
+
+        Star star = starRepository.findByUser(user).orElseThrow(StarNotFoundException::new);
+        starRepository.delete(star);
     }
 }
