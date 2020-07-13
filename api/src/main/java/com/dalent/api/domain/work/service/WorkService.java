@@ -8,6 +8,8 @@ import com.dalent.api.domain.work.domain.Category;
 import com.dalent.api.domain.work.domain.MediaType;
 import com.dalent.api.domain.work.domain.Work;
 import com.dalent.api.domain.work.dto.CreateWorkRequestDto;
+import com.dalent.api.domain.work.dto.WorkDetailResponseDto;
+import com.dalent.api.domain.work.exception.WorkNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -37,5 +39,19 @@ public class WorkService {
                 .build());
 
         return work.getWorkId();
+    }
+
+    public WorkDetailResponseDto findWork(Long workId) {
+        Work work = workRepository.findById(workId).orElseThrow(WorkNotFoundException::new);
+
+        return WorkDetailResponseDto.builder()
+                .category(work.getCategory().getValue())
+                .content(work.getContent())
+                .media_link(work.getMediaLink())
+                .media_type(work.getMediaType().getValue())
+                .nickname(work.getAuthor().getNickname())
+                .thumbnail_image(work.getThumbnailImage())
+                .title(work.getTitle())
+                .build();
     }
 }
