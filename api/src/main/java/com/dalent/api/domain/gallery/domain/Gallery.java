@@ -24,8 +24,12 @@ public class Gallery {
     private String bannerImage;
 
     @Builder
-    public Gallery(User user, String bannerImage) {
+    public Gallery(User user) {
         this.user = user;
+        this.bannerImage = null;
+    }
+
+    public void changeBannerImage(String bannerImage) {
         this.bannerImage = bannerImage;
     }
 }
