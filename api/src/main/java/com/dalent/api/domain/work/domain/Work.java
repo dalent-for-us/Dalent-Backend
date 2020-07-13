@@ -2,6 +2,7 @@ package com.dalent.api.domain.work.domain;
 
 import com.dalent.api.domain.comment.domain.Comment;
 import com.dalent.api.domain.user.domain.User;
+import com.dalent.api.domain.work.dto.CreateWorkRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,6 +58,16 @@ public class Work {
         this.thumbnailImage = thumbnailImage;
         this.author = author;
         this.stars = 0;
+    }
+
+    public void updateWork(String category, String title, String content, String mediaType, String mediaLink,
+                      String thumbnailImage) {
+        if(category != null) this.category = Category.valueOf(category.toUpperCase());
+        if(title != null) this.title = title;
+        if(content != null) this.content = content;
+        if(mediaType != null) this.mediaType = MediaType.valueOf(mediaType.toUpperCase());
+        if(mediaLink != null) this.mediaLink = mediaLink;
+        if(thumbnailImage != null) this.thumbnailImage = thumbnailImage;
     }
 
 }
