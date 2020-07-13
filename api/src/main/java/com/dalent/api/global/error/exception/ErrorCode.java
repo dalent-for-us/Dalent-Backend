@@ -12,7 +12,10 @@ public enum ErrorCode {
 
     //Auth
     AUTHENTICATION(401, "A001", "Authentication Error"),
-    INVALID_TOKEN(401, "A002", "Invalid Token");
+    INVALID_TOKEN(401, "A002", "Invalid Token"),
+
+    //Follow
+    FOLLOW_NOT_FOUND(400, "F001", "Follow Not Found");
 
     private final int status;
     private final String code;
