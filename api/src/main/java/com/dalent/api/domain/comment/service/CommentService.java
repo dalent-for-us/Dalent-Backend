@@ -6,6 +6,7 @@ import com.dalent.api.domain.comment.domain.Comment;
 import com.dalent.api.domain.comment.dto.CommentResponseDto;
 import com.dalent.api.domain.comment.dto.CreateCommentRequestDto;
 import com.dalent.api.domain.comment.exception.CommentNotFoundException;
+import com.dalent.api.domain.comment.exception.NotMyCommentException;
 import com.dalent.api.domain.user.dao.UserRepository;
 import com.dalent.api.domain.user.domain.User;
 import com.dalent.api.domain.work.dao.WorkRepository;
@@ -70,7 +71,26 @@ public class CommentService {
     public void reviseComment(String commentId, String content) {
         Comment comment = commentRepository.findById(Long.parseLong(commentId))
                 .orElseThrow(CommentNotFoundException::new);
+
+        checkOwner(comment);
+
         comment.reviseContent(content);
         commentRepository.save(comment);
+    }
+
+    public void removeComment(String commentId) {
+        Comment comment = commentRepository.findById(Long.parseLong(commentId))
+                .orElseThrow(CommentNotFoundException::new);
+
+        checkOwner(comment);
+
+        commentRepository.delete(comment);
+    }
+
+    private void checkOwner(Comment comment) {
+        String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByNickname(nickname).orElseThrow(UserNotFoundException::new);
+
+        if(!user.equals(comment.getWriter())) throw new NotMyCommentException();
     }
 }
