@@ -30,7 +30,8 @@ public enum ErrorCode {
     NOT_MY_COMMENT(403, "C002", "Not My Comment"),
 
     //Star
-    Already_Gave_Star(409, "S001", "Already Gave Star");
+    STAR_NOT_FOUND(400, "S001", "Star Not Found"),
+    Already_Gave_Star(409, "S002", "Already Gave Star");
 
     private final int status;
     private final String code;
