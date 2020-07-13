@@ -61,8 +61,15 @@ public class WorkService {
                 .build();
     }
 
-    public List<WorkDetailResponseDto> getWorks(String category) {
-        List<Work> works = workRepository.findByCategoryOrderByStarsDesc(Category.valueOf(category.toUpperCase()));
+    public List<WorkDetailResponseDto> getWorks(String categoryName, String nickname) {
+        List<Work> works;
+        Category category = Category.valueOf(categoryName.toUpperCase());
+        if(nickname != null) {
+            User user = userRepository.findByNickname(nickname).orElseThrow(UserNotFoundException::new);
+            works = workRepository.findByCategoryAndAuthorOrderByStarsDesc(category, user);
+        } else {
+            works = workRepository.findByCategoryOrderByStarsDesc(category);
+        }
         return works.stream()
                 .map(work -> WorkDetailResponseDto.builder()
                         .thumbnail_image(work.getThumbnailImage())
