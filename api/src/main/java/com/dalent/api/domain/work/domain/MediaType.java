@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum MediaType {
 
     IMAGE("image", "이미지"),
-    SOUND("sound", "사운드");
+    AUDIO("audio", "오디오");
 
     private final String key;
     private final String value;
