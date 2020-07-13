@@ -6,12 +6,14 @@ import com.dalent.api.domain.star.domain.Star;
 import com.dalent.api.domain.user.dao.UserRepository;
 import com.dalent.api.domain.user.domain.User;
 import com.dalent.api.domain.work.dao.WorkRepository;
-import com.dalent.api.domain.work.domain.Category;
 import com.dalent.api.domain.work.domain.Work;
 import com.dalent.api.domain.work.exception.WorkNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -41,5 +43,17 @@ public class StarService {
                 .work(work)
                 .build());
         return star.getStarId();
+    }
+
+    public List<String> getStars(String workId) {
+        Work work = workRepository.findById(Long.parseLong(workId))
+                .orElseThrow(WorkNotFoundException::new);
+
+        List<Star> stars = starRepository.findAllByWork(work);
+        return stars.stream()
+                .map(star -> {
+                  return star.getUser().getNickname();
+                })
+                .collect(Collectors.toList());
     }
 }
