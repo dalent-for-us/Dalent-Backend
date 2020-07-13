@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -15,8 +16,10 @@ public class MediaService {
     private String path;
 
     public String upload(MultipartFile file) throws Exception{
-        String originalFileName = file.getOriginalFilename();
-        File dest = new File(path + originalFileName);
+        String uuid = UUID.randomUUID().toString();
+        int pos = file.getOriginalFilename().lastIndexOf(".");
+        String ext = file.getOriginalFilename().substring( pos + 1);
+        File dest = new File(path + uuid + "." + ext);
         file.transferTo(dest);
         return dest.getPath();
     }
