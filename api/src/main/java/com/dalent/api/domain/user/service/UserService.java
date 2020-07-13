@@ -51,6 +51,22 @@ public class UserService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
+    public UserInfoResponseDto getUserInfo(String nickname) {
+        return userRepository.findByNickname(nickname)
+                .map(user -> {
+                    Long gallery = (user.getGallery() != null) ? user.getGallery().getGalleryId() : null;
+
+                    return UserInfoResponseDto.builder()
+                            .id(user.getId())
+                            .nickname(user.getNickname())
+                            .introduce(user.getIntroduce())
+                            .profile_image(user.getProfile_image())
+                            .gallery(gallery)
+                            .build();
+                })
+                .orElseThrow(UserNotFoundException::new);
+    }
+
     public void updateMyInfo(UserInfoUpdateRequestDto requestDto) {
         String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
         String profileImage = requestDto.getProfile_image();
