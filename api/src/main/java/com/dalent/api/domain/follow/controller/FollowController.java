@@ -1,5 +1,6 @@
 package com.dalent.api.domain.follow.controller;
 
+import com.dalent.api.domain.follow.dto.FollowRequestDto;
 import com.dalent.api.domain.follow.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,5 +27,10 @@ public class FollowController {
     @GetMapping("/followers")
     public Long getFollowers(@RequestParam String nickname) {
         return followService.getFollowers(nickname);
+    }
+
+    @DeleteMapping
+    public void deleteFollow(@RequestParam String target) {
+        followService.deleteFollow(target);
     }
 }
