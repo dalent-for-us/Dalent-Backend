@@ -33,7 +33,13 @@ public class WorkController {
 
     @GetMapping
     public List<WorkDetailResponseDto> getWorks(@RequestParam String category) {
-        return workService.getWorks(category);
+        return workService.getWorks(category, null);
+    }
+
+    @GetMapping("/users/{user_id}")
+    public List<WorkDetailResponseDto> getUserWorks(@PathVariable("user_id") String userId,
+                                                    @RequestParam String category) {
+        return workService.getWorks(category, userId);
     }
 
     @PatchMapping("/{work_id}")
