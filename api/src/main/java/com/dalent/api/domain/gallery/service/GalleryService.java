@@ -19,8 +19,7 @@ public class GalleryService {
 
     private final UserRepository userRepository;
 
-    public GalleryInfoResponseDto getMyGallery() {
-        String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
+    public GalleryInfoResponseDto getGallery(String nickname) {
         User user = userRepository.findByNickname(nickname).orElseThrow(UserNotFoundException::new);
         Gallery gallery;
         if(!galleryRepository.findByUser(user).isPresent()) {
