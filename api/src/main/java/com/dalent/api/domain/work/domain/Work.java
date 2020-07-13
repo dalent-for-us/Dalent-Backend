@@ -56,6 +56,17 @@ public class Work {
         this.mediaLink = mediaLink;
         this.thumbnailImage = thumbnailImage;
         this.author = author;
+        this.stars = 0;
+    }
+
+    public void updateWork(String category, String title, String content, String mediaType, String mediaLink,
+                      String thumbnailImage) {
+        if(category != null) this.category = Category.valueOf(category.toUpperCase());
+        if(title != null) this.title = title;
+        if(content != null) this.content = content;
+        if(mediaType != null) this.mediaType = MediaType.valueOf(mediaType.toUpperCase());
+        if(mediaLink != null) this.mediaLink = mediaLink;
+        if(thumbnailImage != null) this.thumbnailImage = thumbnailImage;
     }
 
 }
