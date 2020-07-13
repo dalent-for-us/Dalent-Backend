@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+
 @RequiredArgsConstructor
 @RequestMapping("/works")
 @RestController
@@ -23,6 +25,14 @@ public class WorkController {
     @GetMapping("/{work_id}")
     public WorkDetailResponseDto findWork(@PathVariable("work_id") String workId) {
         return workService.findWork(Long.parseLong(workId));
+    }
+
+    @PatchMapping("/{work_id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @Transactional
+    public void updateWork(@PathVariable("work_id") String workId,
+                           @RequestBody CreateWorkRequestDto requestDto) {
+        workService.updateWork(Long.parseLong(workId), requestDto);
     }
 
     @DeleteMapping("/{work_id}")
