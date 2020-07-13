@@ -22,7 +22,8 @@ public enum ErrorCode {
     NOT_MY_GALLERY(403, "G002", "Not My Gallery"),
 
     //Work
-    WORK_NOT_FOUND(400, "W001", "Work Not Found");
+    WORK_NOT_FOUND(400, "W001", "Work Not Found"),
+    NOT_MY_WORK(403, "W002", "Not My Work");
 
     private final int status;
     private final String code;
