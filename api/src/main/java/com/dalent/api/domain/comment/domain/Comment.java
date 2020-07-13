@@ -46,4 +46,8 @@ public class Comment {
         this.parent_comment = parentComment;
     }
 
+    public void reviseContent(String content) {
+        this.content = content;
+    }
+
 }
