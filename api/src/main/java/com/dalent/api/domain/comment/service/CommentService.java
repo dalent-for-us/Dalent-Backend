@@ -3,6 +3,7 @@ package com.dalent.api.domain.comment.service;
 import com.dalent.api.domain.auth.exception.UserNotFoundException;
 import com.dalent.api.domain.comment.dao.CommentRepository;
 import com.dalent.api.domain.comment.domain.Comment;
+import com.dalent.api.domain.comment.dto.CommentResponseDto;
 import com.dalent.api.domain.comment.dto.CreateCommentRequestDto;
 import com.dalent.api.domain.comment.exception.CommentNotFoundException;
 import com.dalent.api.domain.user.dao.UserRepository;
@@ -13,6 +14,9 @@ import com.dalent.api.domain.work.exception.WorkNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +47,23 @@ public class CommentService {
                 .parentComment(parent)
                 .build());
         return comment.getCommentId();
+    }
+
+    public List<CommentResponseDto> getComments(String workId) {
+        Work work = workRepository.findById(Long.parseLong(workId)).orElseThrow(WorkNotFoundException::new);
+        return work.getComments().stream()
+                .map(comment -> {
+                    List<Long> comments = comment.getChildComment().stream()
+                            .map(Comment::getCommentId)
+                            .collect(Collectors.toList());
+
+                    return CommentResponseDto.builder()
+                            .comment_id(comment.getCommentId())
+                            .content(comment.getContent())
+                            .work_id(comment.getWork().getWorkId())
+                            .child_comments(comments)
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 }
