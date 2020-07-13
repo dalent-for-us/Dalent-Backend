@@ -29,6 +29,7 @@ public class FollowController {
     }
 
     @DeleteMapping
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteFollow(@RequestParam String target) {
         followService.deleteFollow(target);
     }
