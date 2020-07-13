@@ -57,6 +57,15 @@ public class WorkService {
                 .build();
     }
 
+    public void updateWork(Long workId, CreateWorkRequestDto request) {
+        Work work = workRepository.findById(workId).orElseThrow(WorkNotFoundException::new);
+
+        work.updateWork(request.getCategory(), request.getTitle(), request.getContent(),
+                request.getMedia_type(), request.getMedia_link(), request.getThumbnail_link());
+        workRepository.save(work);
+    }
+
+
     public void deleteWork(Long workId) {
         Work work = workRepository.findById(workId).orElseThrow(WorkNotFoundException::new);
         String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
