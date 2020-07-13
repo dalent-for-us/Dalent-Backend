@@ -3,8 +3,11 @@ package com.dalent.api.domain.follow.service;
 import com.dalent.api.domain.auth.exception.UserNotFoundException;
 import com.dalent.api.domain.follow.dao.FollowRepository;
 import com.dalent.api.domain.follow.domain.Follow;
+import com.dalent.api.domain.follow.dto.FollowRequestDto;
+import com.dalent.api.domain.follow.exception.FollowNotFoundException;
 import com.dalent.api.domain.user.dao.UserRepository;
 import com.dalent.api.domain.user.domain.User;
+import com.dalent.api.domain.user.exception.UserDuplicateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -42,5 +45,14 @@ public class FollowService {
         List<Follow> followers = followRepository.findAllByTarget(user);
 
         return followers.size();
+    }
+
+    public void deleteFollow(String targetNick) {
+        String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByNickname(nickname).orElseThrow(UserDuplicateException::new);
+        User target = userRepository.findByNickname(targetNick).orElseThrow(UserNotFoundException::new);
+
+        Follow follow = followRepository.findByUserAndTarget(user, target).orElseThrow(FollowNotFoundException::new);
+        followRepository.delete(follow);
     }
 }
