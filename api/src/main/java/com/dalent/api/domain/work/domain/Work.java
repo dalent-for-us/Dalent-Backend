@@ -56,6 +56,7 @@ public class Work {
         this.mediaLink = mediaLink;
         this.thumbnailImage = thumbnailImage;
         this.author = author;
+        this.stars = 0;
     }
 
 }
