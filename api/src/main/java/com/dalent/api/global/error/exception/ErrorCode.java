@@ -27,7 +27,10 @@ public enum ErrorCode {
 
     //Comment
     COMMENT_NOT_FOUND(400, "C001", "Comment Not Found"),
-    NOT_MY_COMMENT(403, "C002", "Not My Comment");
+    NOT_MY_COMMENT(403, "C002", "Not My Comment"),
+
+    //Star
+    Already_Gave_Star(409, "S001", "Already Gave Star");
 
     private final int status;
     private final String code;
