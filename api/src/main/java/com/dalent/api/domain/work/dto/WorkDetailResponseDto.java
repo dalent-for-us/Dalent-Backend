@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class WorkDetailResponseDto {
 
+    private Long work_id;
     private String category;
     private String title;
     private String content;

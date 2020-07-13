@@ -46,6 +46,7 @@ public class WorkService {
         Work work = workRepository.findById(workId).orElseThrow(WorkNotFoundException::new);
 
         return WorkDetailResponseDto.builder()
+                .work_id(work.getWorkId())
                 .category(work.getCategory().getValue())
                 .content(work.getContent())
                 .media_link(work.getMediaLink())
