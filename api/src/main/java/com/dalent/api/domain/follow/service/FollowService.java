@@ -48,7 +48,7 @@ public class FollowService {
 
     public void deleteFollow(String targetNick) {
         String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByNickname(nickname).orElseThrow(UserDuplicateException::new);
+        User user = userRepository.findByNickname(nickname).orElseThrow(UserNotFoundException::new);
         User target = userRepository.findByNickname(targetNick).orElseThrow(UserNotFoundException::new);
 
         Follow follow = followRepository.findByUserAndTarget(user, target).orElseThrow(FollowNotFoundException::new);
