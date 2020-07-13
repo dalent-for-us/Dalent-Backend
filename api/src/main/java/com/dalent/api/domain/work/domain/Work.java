@@ -44,7 +44,7 @@ public class Work {
     private User author;
 
     @OneToMany(mappedBy = "work")
-    private List<Comment> works = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @Builder
     public Work(Category category, String title, String content, MediaType mediaType, String mediaLink,
