@@ -1,5 +1,6 @@
 package com.dalent.api.domain.media.controller;
 
+import com.dalent.api.domain.media.dto.UploadResponseDto;
 import com.dalent.api.domain.media.service.MediaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,13 @@ public class MediaController {
 
     @PostMapping("/files")
     @ResponseStatus(HttpStatus.CREATED)
-    public String upload(@RequestPart MultipartFile file) throws Exception {
-        return mediaService.upload(file);
+    public UploadResponseDto upload(@RequestPart MultipartFile file) throws Exception {
+        String contentType = file.getContentType().split("/")[0];
+        String url = mediaService.upload(file);
+
+        return UploadResponseDto.builder()
+                .media_type(contentType)
+                .file_link(url)
+                .build();
     }
 }
