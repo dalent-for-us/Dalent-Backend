@@ -3,6 +3,7 @@ package com.dalent.api.domain.user.domain;
 import com.dalent.api.domain.comment.domain.Comment;
 import com.dalent.api.domain.follow.domain.Follow;
 import com.dalent.api.domain.gallery.domain.Gallery;
+import com.dalent.api.domain.star.domain.Star;
 import com.dalent.api.domain.work.domain.Work;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,18 +33,16 @@ public class User implements UserDetails {
 
     private String profile_image;
 
-    private int artStars;
-
-    private int fashionStars;
-
-    private int musicStars;
-
-    private int programmingStars;
-
     private String introduce;
 
     @OneToOne(mappedBy = "user")
     private Gallery gallery;
+
+    @OneToMany(mappedBy = "target")
+    private List<Star> stars;
+
+    @OneToMany(mappedBy = "user")
+    private List<Star> give_stars;
 
     @OneToMany(mappedBy = "user")
     private List<Follow> followings = new ArrayList<>();
@@ -62,10 +61,6 @@ public class User implements UserDetails {
         this.id = id;
         this.password = password;
         this.nickname = nickname;
-        this.artStars = 0;
-        this.fashionStars = 0;
-        this.musicStars = 0;
-        this.programmingStars = 0;
         this.introduce = "";
         this.profile_image = "";
     }

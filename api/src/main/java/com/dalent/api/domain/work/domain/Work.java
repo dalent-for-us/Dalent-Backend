@@ -1,6 +1,7 @@
 package com.dalent.api.domain.work.domain;
 
 import com.dalent.api.domain.comment.domain.Comment;
+import com.dalent.api.domain.star.domain.Star;
 import com.dalent.api.domain.user.domain.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -30,8 +31,6 @@ public class Work {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private int stars;
-
     @Enumerated(EnumType.STRING)
     private MediaType mediaType;
 
@@ -42,6 +41,9 @@ public class Work {
     @ManyToOne
     @JoinColumn(name = "author")
     private User author;
+
+    @OneToMany(mappedBy = "work")
+    private List<Star> stars = new ArrayList<>();
 
     @OneToMany(mappedBy = "work")
     private List<Comment> comments = new ArrayList<>();
@@ -56,7 +58,6 @@ public class Work {
         this.mediaLink = mediaLink;
         this.thumbnailImage = thumbnailImage;
         this.author = author;
-        this.stars = 0;
     }
 
     public void updateWork(String category, String title, String content, String mediaType, String mediaLink,
