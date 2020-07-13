@@ -20,11 +20,11 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public User join(UserJoinRequestDto requestDto) {
+    public void join(UserJoinRequestDto requestDto) {
         String password = passwordEncoder.encode(requestDto.getPassword());
         if(userRepository.findByNickname(requestDto.getNickname()).isPresent()) throw new UserDuplicateException();
 
-        return userRepository.save(
+        userRepository.save(
                 User.builder()
                         .id(requestDto.getId())
                         .nickname(requestDto.getNickname())
