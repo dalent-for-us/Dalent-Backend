@@ -23,7 +23,11 @@ public enum ErrorCode {
 
     //Work
     WORK_NOT_FOUND(400, "W001", "Work Not Found"),
-    NOT_MY_WORK(403, "W002", "Not My Work");
+    NOT_MY_WORK(403, "W002", "Not My Work"),
+
+    //Comment
+    COMMENT_NOT_FOUND(400, "C001", "Comment Not Found"),
+    NOT_MY_COMMENT(403, "C002", "Not My Comment");
 
     private final int status;
     private final String code;

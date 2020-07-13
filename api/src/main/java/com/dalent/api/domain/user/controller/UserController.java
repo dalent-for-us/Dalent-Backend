@@ -24,6 +24,11 @@ public class UserController {
     @GetMapping("/me")
     public UserInfoResponseDto getMyInfo() { return userService.getMyInfo(); }
 
+    @GetMapping("/{nickname}")
+    public UserInfoResponseDto getUserInfo(@PathVariable("nickname") String nickname) {
+        return userService.getUserInfo(nickname);
+    }
+
     @PatchMapping("/me")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @Transactional

@@ -1,12 +1,9 @@
 package com.dalent.api.domain.work.controller;
 
-import com.dalent.api.domain.work.domain.Work;
 import com.dalent.api.domain.work.dto.CreateWorkRequestDto;
 import com.dalent.api.domain.work.dto.WorkDetailResponseDto;
 import com.dalent.api.domain.work.service.WorkService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
