@@ -1,13 +1,17 @@
 package com.dalent.api.domain.work.controller;
 
+import com.dalent.api.domain.work.domain.Work;
 import com.dalent.api.domain.work.dto.CreateWorkRequestDto;
 import com.dalent.api.domain.work.dto.WorkDetailResponseDto;
 import com.dalent.api.domain.work.service.WorkService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/works")
@@ -25,6 +29,11 @@ public class WorkController {
     @GetMapping("/{work_id}")
     public WorkDetailResponseDto findWork(@PathVariable("work_id") String workId) {
         return workService.findWork(Long.parseLong(workId));
+    }
+
+    @GetMapping
+    public List<WorkDetailResponseDto> getWorks(@RequestParam String category) {
+        return workService.getWorks(category);
     }
 
     @PatchMapping("/{work_id}")
