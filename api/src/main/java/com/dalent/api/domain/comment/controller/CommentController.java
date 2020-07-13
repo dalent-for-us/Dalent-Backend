@@ -37,4 +37,10 @@ public class CommentController {
 
         commentService.reviseComment(commentId, content.get("content"));
     }
+
+    @DeleteMapping("/{comment_id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void removeComment(@PathVariable("comment_id") String commentId) {
+        commentService.removeComment(commentId);
+    }
 }
