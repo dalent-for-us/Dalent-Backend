@@ -66,4 +66,11 @@ public class CommentService {
                 })
                 .collect(Collectors.toList());
     }
+
+    public void reviseComment(String commentId, String content) {
+        Comment comment = commentRepository.findById(Long.parseLong(commentId))
+                .orElseThrow(CommentNotFoundException::new);
+        comment.reviseContent(content);
+        commentRepository.save(comment);
+    }
 }
