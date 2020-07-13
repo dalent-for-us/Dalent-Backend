@@ -19,4 +19,5 @@ public class WorkDetailResponseDto {
     private String media_link;
     private String thumbnail_image;
     private String nickname;
+    private int stars;
 }

@@ -2,7 +2,6 @@ package com.dalent.api.domain.work.domain;
 
 import com.dalent.api.domain.comment.domain.Comment;
 import com.dalent.api.domain.user.domain.User;
-import com.dalent.api.domain.work.dto.CreateWorkRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
