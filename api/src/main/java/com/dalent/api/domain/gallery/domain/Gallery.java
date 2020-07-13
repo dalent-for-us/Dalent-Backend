@@ -28,4 +28,8 @@ public class Gallery {
         this.user = user;
         this.bannerImage = null;
     }
+
+    public void changeBannerImage(String bannerImage) {
+        this.bannerImage = bannerImage;
+    }
 }
