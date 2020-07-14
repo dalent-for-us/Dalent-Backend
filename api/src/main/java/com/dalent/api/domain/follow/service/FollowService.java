@@ -3,6 +3,7 @@ package com.dalent.api.domain.follow.service;
 import com.dalent.api.domain.auth.exception.UserNotFoundException;
 import com.dalent.api.domain.follow.dao.FollowRepository;
 import com.dalent.api.domain.follow.domain.Follow;
+import com.dalent.api.domain.follow.exception.AlreadyFollowException;
 import com.dalent.api.domain.follow.exception.FollowNotFoundException;
 import com.dalent.api.domain.user.dao.UserRepository;
 import com.dalent.api.domain.user.domain.User;
@@ -25,6 +26,7 @@ public class FollowService {
         String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByNickname(nickname).orElseThrow(UserNotFoundException::new);
         User target = userRepository.findByNickname(targetNickname).orElseThrow(UserNotFoundException::new);
+        if(followRepository.findByUserAndTarget(user, target).isPresent()) throw new AlreadyFollowException();
 
         followRepository.save(Follow.builder()
                 .user(user)

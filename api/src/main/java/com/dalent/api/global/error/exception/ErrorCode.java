@@ -16,6 +16,7 @@ public enum ErrorCode {
 
     //Follow
     FOLLOW_NOT_FOUND(400, "F001", "Follow Not Found"),
+    Already_Follow(409, "F002", "Already Follow User"),
 
     //Gallery
     GALLERY_NOT_FOUND(400, "G001", "Gallery Not Found"),
