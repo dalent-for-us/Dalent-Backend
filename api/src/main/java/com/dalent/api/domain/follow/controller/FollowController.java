@@ -33,4 +33,9 @@ public class FollowController {
     public void deleteFollow(@RequestParam String target) {
         followService.deleteFollow(target);
     }
+
+    @GetMapping("/{nickname}")
+    public boolean checkFollow(@PathVariable String nickname) {
+        return followService.checkFollow(nickname);
+    }
 }
