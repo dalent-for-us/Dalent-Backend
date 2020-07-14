@@ -70,7 +70,7 @@ public class StarService {
         String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByNickname(nickname).orElseThrow(UserNotFoundException::new);
 
-        Star star = starRepository.findByUser(user).orElseThrow(StarNotFoundException::new);
+        Star star = starRepository.findByUserAndWork(user, work).orElseThrow(StarNotFoundException::new);
         User target = userRepository.findByNickname(star.getTarget().getNickname())
                 .orElseThrow(UserNotFoundException::new);
         target.changeStarCount(star.getCategory().getKey(), -1);
