@@ -40,6 +40,8 @@ public class StarService {
 
         if(starRepository.findByUser(user).isPresent()) throw new AlreadyGaveStarException();
 
+        target.changeStarCount(work.getCategory().getKey(), 1);
+
         Star star = starRepository.save(Star.builder()
                 .category(work.getCategory())
                 .user(user)
@@ -69,6 +71,10 @@ public class StarService {
         User user = userRepository.findByNickname(nickname).orElseThrow(UserNotFoundException::new);
 
         Star star = starRepository.findByUser(user).orElseThrow(StarNotFoundException::new);
+        User target = userRepository.findByNickname(star.getTarget().getNickname())
+                .orElseThrow(UserNotFoundException::new);
+        target.changeStarCount(star.getCategory().getKey(), -1);
+
         starRepository.delete(star);
     }
 }
