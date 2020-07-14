@@ -35,6 +35,14 @@ public class User implements UserDetails {
 
     private String introduce;
 
+    private int artStarCounts;
+
+    private int programmingStarCounts;
+
+    private int fashionStarCounts;
+
+    private int musicStarCounts;
+
     @OneToOne(mappedBy = "user")
     private Gallery gallery;
 
@@ -63,11 +71,36 @@ public class User implements UserDetails {
         this.nickname = nickname;
         this.introduce = "";
         this.profile_image = "";
+        this.artStarCounts = 0;
+        this.musicStarCounts = 0;
+        this.programmingStarCounts = 0;
+        this.fashionStarCounts = 0;
     }
 
     public void reviseInfo(String profile_image, String introduce) {
         if(profile_image != null) this.profile_image = profile_image;
         if(introduce != null) this.introduce = introduce;
+    }
+
+    public void changeStarCount(String category, int count) {
+        switch (category) {
+            case "ART": {
+                this.artStarCounts += count;
+                break;
+            }
+            case "MUSIC": {
+                this.musicStarCounts += count;
+                break;
+            }
+            case "PROGRAMMING": {
+                this.programmingStarCounts += count;
+                break;
+            }
+            case "FASHION": {
+                this.fashionStarCounts += count;
+                break;
+            }
+        }
     }
 
     @Override
