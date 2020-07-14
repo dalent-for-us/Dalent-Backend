@@ -57,7 +57,7 @@ public class WorkService {
                 .nickname(work.getAuthor().getNickname())
                 .thumbnail_image(work.getThumbnailImage())
                 .title(work.getTitle())
-                .stars(work.getStars())
+                .stars(work.getStars().size())
                 .build();
     }
 
@@ -80,7 +80,7 @@ public class WorkService {
                         .content(work.getContent())
                         .category(work.getCategory().getValue())
                         .work_id(work.getWorkId())
-                        .stars(work.getStars())
+                        .stars(work.getStars().size())
                         .build())
                 .collect(Collectors.toList());
     }

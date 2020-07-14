@@ -3,6 +3,7 @@ package com.dalent.api.domain.user.domain;
 import com.dalent.api.domain.comment.domain.Comment;
 import com.dalent.api.domain.follow.domain.Follow;
 import com.dalent.api.domain.gallery.domain.Gallery;
+import com.dalent.api.domain.star.domain.Star;
 import com.dalent.api.domain.work.domain.Work;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,18 +33,24 @@ public class User implements UserDetails {
 
     private String profile_image;
 
-    private int artStars;
-
-    private int fashionStars;
-
-    private int musicStars;
-
-    private int programmingStars;
-
     private String introduce;
+
+    private int artStarCounts;
+
+    private int programmingStarCounts;
+
+    private int fashionStarCounts;
+
+    private int musicStarCounts;
 
     @OneToOne(mappedBy = "user")
     private Gallery gallery;
+
+    @OneToMany(mappedBy = "target")
+    private List<Star> stars;
+
+    @OneToMany(mappedBy = "user")
+    private List<Star> give_stars;
 
     @OneToMany(mappedBy = "user")
     private List<Follow> followings = new ArrayList<>();
@@ -62,17 +69,38 @@ public class User implements UserDetails {
         this.id = id;
         this.password = password;
         this.nickname = nickname;
-        this.artStars = 0;
-        this.fashionStars = 0;
-        this.musicStars = 0;
-        this.programmingStars = 0;
         this.introduce = "";
         this.profile_image = "";
+        this.artStarCounts = 0;
+        this.musicStarCounts = 0;
+        this.programmingStarCounts = 0;
+        this.fashionStarCounts = 0;
     }
 
     public void reviseInfo(String profile_image, String introduce) {
         if(profile_image != null) this.profile_image = profile_image;
         if(introduce != null) this.introduce = introduce;
+    }
+
+    public void changeStarCount(String category, int count) {
+        switch (category) {
+            case "ART": {
+                this.artStarCounts += count;
+                break;
+            }
+            case "MUSIC": {
+                this.musicStarCounts += count;
+                break;
+            }
+            case "PROGRAMMING": {
+                this.programmingStarCounts += count;
+                break;
+            }
+            case "FASHION": {
+                this.fashionStarCounts += count;
+                break;
+            }
+        }
     }
 
     @Override

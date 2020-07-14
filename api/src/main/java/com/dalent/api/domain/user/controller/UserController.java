@@ -1,5 +1,6 @@
 package com.dalent.api.domain.user.controller;
 
+import com.dalent.api.domain.service.RankService;
 import com.dalent.api.domain.user.dto.UserInfoResponseDto;
 import com.dalent.api.domain.user.dto.UserInfoUpdateRequestDto;
 import com.dalent.api.domain.user.dto.UserJoinRequestDto;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -16,6 +18,8 @@ import javax.transaction.Transactional;
 public class UserController {
 
     private final UserService userService;
+
+    private final RankService rankService;
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -34,5 +38,10 @@ public class UserController {
     @Transactional
     public void updateMyInfo(@RequestBody UserInfoUpdateRequestDto requestDto) {
         userService.updateMyInfo(requestDto);
+    }
+
+    @GetMapping("/ranks/{category}")
+    public List<UserInfoResponseDto> getRanks(@PathVariable("category") String category) {
+        return rankService.getRanks(category);
     }
 }

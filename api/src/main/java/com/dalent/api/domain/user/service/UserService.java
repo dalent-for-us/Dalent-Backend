@@ -46,6 +46,7 @@ public class UserService {
                             .introduce(user.getIntroduce())
                             .profile_image(user.getProfile_image())
                             .gallery(gallery)
+                            .stars(user.getStars().size())
                             .build();
                 })
                 .orElseThrow(UserNotFoundException::new);
@@ -62,6 +63,7 @@ public class UserService {
                             .introduce(user.getIntroduce())
                             .profile_image(user.getProfile_image())
                             .gallery(gallery)
+                            .stars(user.getStars().size())
                             .build();
                 })
                 .orElseThrow(UserNotFoundException::new);
