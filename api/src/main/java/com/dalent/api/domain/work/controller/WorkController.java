@@ -33,8 +33,8 @@ public class WorkController {
         return workService.getWorks(category, null);
     }
 
-    @GetMapping("/users/{user_id}")
-    public List<WorkDetailResponseDto> getUserWorks(@PathVariable("user_id") String userId,
+    @GetMapping("/users/{nickname}")
+    public List<WorkDetailResponseDto> getUserWorks(@PathVariable("nickname") String userId,
                                                     @RequestParam String category) {
         return workService.getWorks(category, userId);
     }
