@@ -47,11 +47,23 @@ public class FollowService {
     }
 
     public void deleteFollow(String targetNick) {
+        Follow follow = findFollow(targetNick);
+        followRepository.delete(follow);
+    }
+
+    public boolean checkFollow(String targetNick) {
         String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByNickname(nickname).orElseThrow(UserNotFoundException::new);
         User target = userRepository.findByNickname(targetNick).orElseThrow(UserNotFoundException::new);
 
-        Follow follow = followRepository.findByUserAndTarget(user, target).orElseThrow(FollowNotFoundException::new);
-        followRepository.delete(follow);
+        return followRepository.findByUserAndTarget(user, target).isPresent();
+    }
+
+    private Follow findFollow(String targetNick) {
+        String nickname = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByNickname(nickname).orElseThrow(UserNotFoundException::new);
+        User target = userRepository.findByNickname(targetNick).orElseThrow(UserNotFoundException::new);
+
+        return followRepository.findByUserAndTarget(user, target).orElseThrow(FollowNotFoundException::new);
     }
 }
