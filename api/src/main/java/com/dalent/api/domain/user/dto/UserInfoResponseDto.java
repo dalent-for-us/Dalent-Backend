@@ -16,4 +16,5 @@ public class UserInfoResponseDto {
     private String profile_image;
     private String introduce;
     private Long gallery;
+    private int stars;
 }
