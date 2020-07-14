@@ -38,7 +38,7 @@ public class StarService {
         User target = userRepository.findByNickname(work.getAuthor().getNickname())
                 .orElseThrow(UserNotFoundException::new);
 
-        if(starRepository.findByUser(user).isPresent()) throw new AlreadyGaveStarException();
+        if(starRepository.findByUserAndWork(user, work).isPresent()) throw new AlreadyGaveStarException();
 
         target.changeStarCount(work.getCategory().getKey(), 1);
 

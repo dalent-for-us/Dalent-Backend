@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface StarRepository extends JpaRepository<Star, Long> {
     List<Star> findAllByWork(Work work);
     Optional<Star> findByUser(User user);
+    Optional<Star> findByUserAndWork(User user, Work work);
 }
