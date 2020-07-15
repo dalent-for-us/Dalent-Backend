@@ -40,6 +40,7 @@ public class RankService {
         return users.stream()
                 .map(user -> {
                     Long gallery = (user.getGallery() != null) ? user.getGallery().getGalleryId() : null;
+                    int stars = user.getStars(category);
 
                     return UserInfoResponseDto.builder()
                             .id(user.getId())
@@ -47,7 +48,7 @@ public class RankService {
                             .introduce(user.getIntroduce())
                             .profile_image(user.getProfile_image())
                             .gallery(gallery)
-                            .stars(user.getStars().size())
+                            .stars(stars)
                             .build();
                 })
                 .collect(Collectors.toList());
