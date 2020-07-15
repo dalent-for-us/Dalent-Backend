@@ -102,6 +102,31 @@ public class User implements UserDetails {
             }
         }
     }
+    
+    public int getStars(String category) {
+        int stars;
+        switch (category) {
+            case "art": {
+                stars = this.artStarCounts;
+                break;
+            }
+            case "music": {
+                stars = this.musicStarCounts;
+                break;
+            }
+            case "programming": {
+                stars = this.programmingStarCounts;
+                break;
+            }
+            case "fashion": {
+                stars = this.fashionStarCounts;
+                break;
+            }
+            default:
+                throw new IllegalStateException("Unexpected value: " + category);
+        }
+        return stars;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
