@@ -42,7 +42,6 @@ jobs:
         aws-access-key-id: $
         aws-secret-key-id: $
         aws-region: $
-        
     - name: Upload to S3
       run: cd api && aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://dalent-bucket/$PROJECT_NAME/$GITHUB_SHA.zip
       
