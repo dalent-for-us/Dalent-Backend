@@ -1,6 +1,6 @@
 name: Java CI with Gradle
 env:
-  PROJECT_NAME: action_codedeploy 
+  PROJECT_NAME: dalent_codedeploy 
 
 on:
   push:
@@ -31,3 +31,20 @@ jobs:
     - name: Build with Gradle
       run: ./api/gradlew build
       shell: bash
+    
+    - name: Make zip file
+      run: cd api && zip -qq -r ./$GITHUB_SHA.zip .
+      shell: bash
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: $
+        aws-secret-key-id: $
+        aws-region: $
+        
+    - name: Upload to S3
+      run: cd api && aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://dalent-bucket/$PROJECT_NAME/$GITHUB_SHA.zip
+      
+    - name: Code Deploy
+      run: aws deploy create-deployment --application-name dalent --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name dev --s3-location bucket=dalent-bucket,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
