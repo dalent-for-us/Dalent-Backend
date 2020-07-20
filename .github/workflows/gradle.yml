@@ -29,7 +29,7 @@ jobs:
       shell: bash
     
     - name: Build with Gradle
-      run: cd api && gradlew build
+      run: cd api && ./gradlew build
       shell: bash
     
     - name: Make zip file
