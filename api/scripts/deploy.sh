@@ -30,5 +30,5 @@ chomod u+w+x $REPOSITORY/nohup.out
 
 echo "> $JAR_NAME 실행"
 nohup java -jar \ 
-    -Dspring.config.location=classpath:/application.properties, application-secret.properties \
+    -Dspring.config.location=classpath:/application.properties,application-secret.properties \
     $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
