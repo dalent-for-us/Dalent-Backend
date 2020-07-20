@@ -28,6 +28,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	compile group: 'org.springframework.cloud', name: 'spring-cloud-aws-context', version: '2.2.1.RELEASE'
 	compileOnly 'org.projectlombok:lombok'
+	compile 'mysql:mysql-connector-java'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
