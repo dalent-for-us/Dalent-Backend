@@ -4,7 +4,7 @@ REPOSITORY=/home/ec2-user/dalent
 PROJECT_NAME=dalent
 
 echo "> Build 파일 복사"
-cp $REPOSITORY/zip/*.jar $REPOSITORY/
+cp $REPOSITORY/zip/build/libs/*.jar $REPOSITORY/
 
 echo "> 현재 구동 중인 애플리케이션 pid 확인"
 CURRENT_PID=$(pgrep -fl dalent | grep jar | awk '{print $1}')
@@ -25,8 +25,8 @@ JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)
 echo "> JAR Name : $JAR_NAME"
 
 echo "> JAR_NAME 에 실행권한 추가"
-chomod +x $JAR_NAME
-chomod u+w+x $REPOSITORY/nohup.out
+chmod +x $JAR_NAME
+chmod u+w+x $REPOSITORY/nohup.out
 
 echo "> $JAR_NAME 실행"
 nohup java -jar \ 
